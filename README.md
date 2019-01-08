@@ -1,10 +1,14 @@
-# rollup-plugin-string
+# rollup-plugin-dot
 
 rollup plugin to compile doT files.
+
+`view.dot`
 
 ```html
 <p>{{= it.message }}</p>
 ```
+
+`main.js`
 
 ```js
 import view from './view.dot';
@@ -14,24 +18,35 @@ console.log(`Render result: ${view(data)}`);
 
 ## Installation
 
-```sh
-npm i rollup-plugin-dot -D
+```shell
+yarn add -D rollup-plugin-dot
+
+// Or use npm
+npm install -D rollup-plugin-dot
 ```
 
 ## Usage
 
+`rollup.config.js`
+
 ```js
-import { rollup } from 'rollup';
 import dot from 'rollup-plugin-dot';
 
-rollup({
-	entry: 'src/index.js',
+export default {
+	input: 'src/index.js',
+	output: {
+        file: 'dist/bundle.js',
+        format: 'iife',
+    },
 	plugins: [
 		dot({
-			include: ['**/*.dot', '**/*.tpl'], // default to '**/*.dot'
-			exclude: ['**/index.html'], // default to undefined
-			templateSettings: { strip: false } // doT template settings, default to undefined
-		})
-	]
-});
+			include: ['**/*.dot', '**/*.tpl'], // default to `**/*.dot`
+			exclude: ['**/index.tpl'], // default to `undefined`
+			templateSettings: { strip: false }, // doT template settings, default to doT's default settings
+			defines: { // doT template defines, default to `undefined`
+			    env: process.env.NODE_ENV || 'development',
+			},
+		}),
+	],
+};
 ```

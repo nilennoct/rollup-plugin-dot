@@ -1,4 +1,8 @@
-/lib
-.idea
-node_modules
+.idea/
+lib/
+es/
+node_modules/
+test/output/
+
 *.log
+*.tgz
